@@ -11,7 +11,7 @@ namespace yut23.ButtonMapper
         public override string DisplayName { get { return "Button Mapper Mod"; } }
         public override string Author { get { return "Yut23"; } }
         public override Version Version { get { return new Version(1, 0); } }
-        public override string BesiegeVersion { get { return "v0.10"; } }
+        public override string BesiegeVersion { get { return "v0.11"; } }
         public override bool CanBeUnloaded { get { return true; } }
 
         public override void OnLoad()
