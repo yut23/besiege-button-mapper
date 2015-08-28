@@ -16,11 +16,30 @@ namespace yut23.ButtonMapper
 
         public override void OnLoad()
         {
+            if (!Configuration.DoesKeyExist("key:translate")) {
+                Configuration.SetString("key:translate", "t");
+            }
+            if (!Configuration.DoesKeyExist("key:erase")) {
+                Configuration.SetString("key:erase", "n");
+            }
+            if (!Configuration.DoesKeyExist("key:km+pt")) {
+                Configuration.SetString("key:km+pt", "m");
+            }
+            if (!Configuration.DoesKeyExist("key:modifier")) {
+                Configuration.SetString("key:modifier", "left alt");
+            }
+            if (!Configuration.DoesKeyExist("key:trigger")) {
+                Configuration.SetString("key:trigger", "b");
+            }
             GameObject gameObject = new GameObject();
             gameObject.AddComponent<ButtonMapperMod>();
             GameObject.DontDestroyOnLoad(gameObject);
         }
 
-        public override void OnUnload() { GameObject.Destroy(temp); }
+        public override void OnUnload()
+        {
+            GameObject.Destroy(temp);
+            Configuration.Save();
+        }
     }
 }
