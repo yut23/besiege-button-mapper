@@ -7,7 +7,7 @@ namespace yut23.ButtonMapper
 {
     public class ButtonMapperMod : MonoBehaviour
     {
-        private string translateKey, eraseKey, mapKey, modifierKey, triggerKey;
+        private string translateKey, eraseKey, mapKey;
         private TranslateButton translateButton = null;
         private EraseButton eraseButton = null;
         private KeyMapModeButton mapButton = null;
@@ -21,8 +21,12 @@ namespace yut23.ButtonMapper
             translateKey = Configuration.GetString("key:translate", "t");
             eraseKey = Configuration.GetString("key:erase", "n");
             mapKey = Configuration.GetString("key:km+pt", "m");
-            modifierKey = Configuration.GetString("key:modifier", "left alt");
-            triggerKey = Configuration.GetString("key:trigger", "b");
+            SettingsMenu.RegisterSettingsButton("Button\nMapper", new SettingsToggle(SetGuiVisible), false, 13);
+        }
+
+        private void SetGuiVisible(bool active)
+        {
+            isGuiVisible = active;
         }
 
         private void OnConfigurationChange(object sender, ConfigurationEventArgs e)
@@ -69,10 +73,6 @@ namespace yut23.ButtonMapper
 
         public void Update()
         {
-            if (Input.GetKey(modifierKey) && Input.GetKeyDown(triggerKey))
-            {
-                isGuiVisible = !isGuiVisible;
-            }
             if (isLoaded && !AddPiece.isSimulating && !LevelEditController.levelEditActive)
             {
                 if (Input.GetKeyDown(translateKey)) translateButton.OnMouseDown();

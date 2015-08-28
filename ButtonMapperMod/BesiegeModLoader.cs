@@ -25,12 +25,6 @@ namespace yut23.ButtonMapper
             if (!Configuration.DoesKeyExist("key:km+pt")) {
                 Configuration.SetString("key:km+pt", "m");
             }
-            if (!Configuration.DoesKeyExist("key:modifier")) {
-                Configuration.SetString("key:modifier", "left alt");
-            }
-            if (!Configuration.DoesKeyExist("key:trigger")) {
-                Configuration.SetString("key:trigger", "b");
-            }
             GameObject gameObject = new GameObject();
             gameObject.AddComponent<ButtonMapperMod>();
             GameObject.DontDestroyOnLoad(gameObject);
