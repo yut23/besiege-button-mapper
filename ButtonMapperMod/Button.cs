@@ -17,7 +17,7 @@ namespace yut23.ButtonMapper
             }
             set {
                 _key = value;
-                Configuration.SetString("key:translate", value);
+                Configuration.SetString("key:" + name.ToLower(), value);
             }
         }
         public new string name { get; private set; }
