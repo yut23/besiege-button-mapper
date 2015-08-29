@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace yut23.ButtonMapper
 {
-    public class BesiegeModLoader : Mod
+    public class ButtonMapperLoader : Mod
     {
         public GameObject temp;
         public override string Name { get { return "button-mapper-mod"; } }
@@ -25,14 +25,12 @@ namespace yut23.ButtonMapper
             if (!Configuration.DoesKeyExist("key:km+pt")) {
                 Configuration.SetString("key:km+pt", "m");
             }
-            GameObject gameObject = new GameObject();
-            gameObject.AddComponent<ButtonMapperMod>();
-            GameObject.DontDestroyOnLoad(gameObject);
+            GameObject.DontDestroyOnLoad(SingleInstance<ButtonMapper>.Instance);
         }
 
         public override void OnUnload()
         {
-            GameObject.Destroy(temp);
+            GameObject.Destroy(SingleInstance<ButtonMapper>.Instance.gameObject);
             Configuration.Save();
         }
     }
