@@ -22,15 +22,17 @@ namespace yut23.ButtonMapper
         }
         public new string name { get; private set; }
         public bool isMousedOver { get; private set; }
-        private bool isFirstMouseOver { get; set; }
-        private MeshRenderer tooltip { get; set; }
-        private IButtonAdapter button { get; set; }
+        private bool isFirstMouseOver;
+        private MeshRenderer tooltip;
+        private string tooltipStr;
+        private IButtonAdapter button;
 
         public Button Init(IButtonAdapter button, string name, string tooltip)
         {
             this.button = button;
             this.name = name;
-            this.tooltip = GameObject.Find(tooltip + "/Tooltip").GetComponentInChildren<MeshRenderer>();
+            this.tooltipStr = tooltip;
+            this.tooltip = GameObject.Find(tooltipStr + "/Tooltip").GetComponentInChildren<MeshRenderer>();
             this.key = Configuration.GetString("key:" + name.ToLower(), "");
             return this;
         }
@@ -45,13 +47,13 @@ namespace yut23.ButtonMapper
             if (tooltip.enabled && isFirstMouseOver)
             {
                 isMousedOver = true;
-                OnMouseOver();
+                if (OnMouseOver != null) OnMouseOver();
                 isFirstMouseOver = false;
             }
             else if (!tooltip.enabled && !isFirstMouseOver)
             {
                 isMousedOver = false;
-                OnMouseOut();
+                if (OnMouseOut != null) OnMouseOut();
                 isFirstMouseOver = true;
             }
         }

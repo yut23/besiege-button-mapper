@@ -23,6 +23,15 @@ namespace yut23.ButtonMapper
         public float keyRepeatDelay = 0.15f;
         private float timePassed = 0f;
 
+        private float prevRealTime;
+        private float thisRealTime;
+        public float deltaTime {
+            get {
+                if (Time.timeScale > 0f) return Time.deltaTime / Time.timeScale;
+                return Time.realtimeSinceStartup - prevRealTime; // Checks realtimeSinceStartup again because it may have changed since Update was called
+            }
+        }
+
         public const string ADD_TIME_HOTKEY_USAGE = "Usage: addTimeHotkey <float percent> <string key>";
         public const string REMOVE_TIME_HOTKEY_USAGE = "Usage: removeTimeHotkey <string key>";
         public const string LIST_TIME_HOTKEYS_USAGE = "Usage: listTimeHotkeys";
@@ -134,7 +143,11 @@ namespace yut23.ButtonMapper
         public void Update()
         {
             if (!isLoaded) return;
-            timePassed += Time.deltaTime; // needed for speed changing key repeat
+            
+            // need real deltaTime for speed changing key repeat
+            prevRealTime = thisRealTime;
+            thisRealTime = Time.realtimeSinceStartup;
+            timePassed += deltaTime;
 
             timeScale = timeSliderObject.timeSliderCode.delegateTimeScale / 2f;
 
