@@ -29,6 +29,7 @@ namespace yut23.ButtonMapper
             buttons.Add(gameObject.AddComponent<Button>().Init(new EraseButtonAdapter(), "Erase", "EraseTool"));
             buttons.Add(gameObject.AddComponent<Button>().Init(new KeyMapModeButtonAdapter(), "KM+PT", "KeyMapInfoTool"));
 
+            // load configuration
             foreach (var b in buttons)
             {
                 b.key = Configuration.GetString("key:" + b.name.ToLower(), "");
@@ -51,6 +52,7 @@ namespace yut23.ButtonMapper
 
         private void MakeWindow(int id)
         {
+            // toolbar button bindings
             foreach (var b in buttons)
             {
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
@@ -60,6 +62,7 @@ namespace yut23.ButtonMapper
                 GUILayout.EndHorizontal();
                 GUILayout.Space(3);
             }
+            // time slider bindings
             timeScaleMapper.GuiRun();
             GUI.DragWindow();
         }
@@ -70,6 +73,7 @@ namespace yut23.ButtonMapper
             {
                 foreach (var b in buttons)
                 {
+                    // handle assigning keybinds on mouseOver
                     if (b.isMousedOver && Input.anyKeyDown)
                     {
                         string tempKey = b.key;
@@ -77,6 +81,7 @@ namespace yut23.ButtonMapper
                         try { Input.GetKey(b.key); }
                         catch { b.key = tempKey; }
                     }
+                    // handle button keybinds
                     if (Input.GetKeyDown(b.key)) b.Trigger();
                 }
             }

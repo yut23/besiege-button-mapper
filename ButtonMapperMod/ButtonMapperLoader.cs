@@ -9,7 +9,7 @@ namespace yut23.ButtonMapper
         public override string Name { get { return "button-mapper-mod"; } }
         public override string DisplayName { get { return "Button Mapper Mod"; } }
         public override string Author { get { return "Yut23"; } }
-        public override Version Version { get { return new Version(1, 1); } }
+        public override Version Version { get { return new Version(2, 0); } }
         public override string BesiegeVersion { get { return "v0.11"; } }
         public override bool CanBeUnloaded { get { return true; } }
 
@@ -17,11 +17,16 @@ namespace yut23.ButtonMapper
 
         public override void OnLoad()
         {
+            // toolbar mapping configs
             AddConfigIfNotExist("key:translate", "t");
             AddConfigIfNotExist("key:erase", "n");
             AddConfigIfNotExist("key:km+pt", "m");
+
+            // time slider mapping configs
             AddConfigIfNotExist("key:speedup", "=");
             AddConfigIfNotExist("key:speeddown", "-");
+
+            // custom time hotkey configs
             AddConfigIfNotExist("boundKeys", "[ ] \\");
             hotkeyList = Configuration.GetString("boundKeys", "");
             if (!Configuration.DoesKeyExist("boundKey:["))

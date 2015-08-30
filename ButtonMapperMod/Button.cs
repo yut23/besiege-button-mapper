@@ -62,6 +62,7 @@ namespace yut23.ButtonMapper
         void OnMouseDown();
     }
 
+    #region IButtonAdapter wrappers
     class TranslateButtonAdapter : IButtonAdapter
     {
         TranslateButton translateButton = GameObject.FindObjectOfType<TranslateButton>();
@@ -79,4 +80,5 @@ namespace yut23.ButtonMapper
         KeyMapModeButton keyMapModeButton = GameObject.FindObjectOfType<KeyMapModeButton>();
         public void OnMouseDown() { keyMapModeButton.OnMouseDown(); }
     }
+    #endregion
 }
