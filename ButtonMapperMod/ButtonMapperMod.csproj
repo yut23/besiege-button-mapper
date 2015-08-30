@@ -7,7 +7,7 @@
     <ProjectGuid>{F01D62CC-954D-4F25-9E4E-4C0D37796476}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ButtonMapper</RootNamespace>
+    <RootNamespace>yut23.ButtonMapper</RootNamespace>
     <AssemblyName>ButtonMapper</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
     <StartProgram>$(BESIEGE_LOCATION)Besiege.exe</StartProgram>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,9 +58,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BesiegeModLoader.cs" />
-    <Compile Include="ButtonMapperMod.cs" />
+    <Compile Include="ButtonMapperLoader.cs" />
+    <Compile Include="Button.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ButtonMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeScaleMapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
