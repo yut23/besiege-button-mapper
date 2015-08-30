@@ -6,25 +6,32 @@ namespace yut23.ButtonMapper
 {
     public class ButtonMapperLoader : Mod
     {
-        public GameObject temp;
         public override string Name { get { return "button-mapper-mod"; } }
         public override string DisplayName { get { return "Button Mapper Mod"; } }
         public override string Author { get { return "Yut23"; } }
-        public override Version Version { get { return new Version(1, 0); } }
+        public override Version Version { get { return new Version(1, 1); } }
         public override string BesiegeVersion { get { return "v0.11"; } }
         public override bool CanBeUnloaded { get { return true; } }
 
+        private string hotkeyList;
+
         public override void OnLoad()
         {
-            if (!Configuration.DoesKeyExist("key:translate")) {
-                Configuration.SetString("key:translate", "t");
-            }
-            if (!Configuration.DoesKeyExist("key:erase")) {
-                Configuration.SetString("key:erase", "n");
-            }
-            if (!Configuration.DoesKeyExist("key:km+pt")) {
-                Configuration.SetString("key:km+pt", "m");
-            }
+            AddConfigIfNotExist("key:translate", "t");
+            AddConfigIfNotExist("key:erase", "n");
+            AddConfigIfNotExist("key:km+pt", "m");
+            AddConfigIfNotExist("key:speedup", "=");
+            AddConfigIfNotExist("key:speeddown", "-");
+            AddConfigIfNotExist("boundKeys", "[ ] \\");
+            hotkeyList = Configuration.GetString("boundKeys", "");
+            if (!Configuration.DoesKeyExist("boundKey:["))
+                Configuration.SetFloat("boundKey:[", 0);
+            if (!Configuration.DoesKeyExist("boundKey:]"))
+                Configuration.SetFloat("boundKey:]", 1);
+            if (!Configuration.DoesKeyExist("boundKey:\\"))
+                Configuration.SetFloat("boundKey:\\", 100);
+            Configuration.SetString("boundKeys", hotkeyList);
+
             GameObject.DontDestroyOnLoad(SingleInstance<ButtonMapper>.Instance);
         }
 
@@ -32,6 +39,12 @@ namespace yut23.ButtonMapper
         {
             GameObject.Destroy(SingleInstance<ButtonMapper>.Instance.gameObject);
             Configuration.Save();
+        }
+
+        private void AddConfigIfNotExist(string name, string defaultValue)
+        {
+            if (!Configuration.DoesKeyExist(name))
+                Configuration.SetString(name, defaultValue);
         }
     }
 }
