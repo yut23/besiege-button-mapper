@@ -9,7 +9,7 @@ namespace yut23.ButtonMapper
     class TimeScaleMapper : MonoBehaviour
     {
         private TimeSliderObject timeSliderObject;
-        private string speedUpKey, speedDownKey;
+        private string speedUpKey, speedDownKey, tempSpeedUpKey, tempSpeedDownKey;
         private Dictionary<string, float> percentHotkeys = new Dictionary<string, float>();
         private bool isLoaded = false;
 
@@ -42,8 +42,8 @@ namespace yut23.ButtonMapper
             timeScale = timeSliderObject.timeSliderCode.delegateTimeScale / 2f;
 
             // load configuration
-            speedUpKey = Configuration.GetString("key:speedup", "=");
-            speedDownKey = Configuration.GetString("key:speeddown", "-");
+            speedUpKey = tempSpeedUpKey = Configuration.GetString("key:speedup", "=");
+            speedDownKey = tempSpeedDownKey = Configuration.GetString("key:speeddown", "-");
 
             string[] hotkeys = Configuration.GetString("boundKeys", "").Split(new char[] {' '},
                 StringSplitOptions.RemoveEmptyEntries); // this shouldn't really be needed, but computers are weird sometimes
@@ -128,7 +128,13 @@ namespace yut23.ButtonMapper
             GUILayout.BeginHorizontal(new GUILayoutOption[0]);
             GUILayout.Label("Increase speed key:", new GUILayoutOption[0]);
             GUILayout.FlexibleSpace();
-            speedUpKey = GUILayout.TextField(speedUpKey, GUILayout.MinWidth(90));
+            GUI.SetNextControlName("SpeedUpTextField");
+            tempSpeedUpKey = GUILayout.TextField(tempSpeedUpKey, GUILayout.MinWidth(90));
+            if (GUI.GetNameOfFocusedControl() != "SpeedUpTextField" && tempSpeedUpKey != "")
+            {
+                speedUpKey = tempSpeedUpKey;
+                Configuration.SetString("key:speedup", speedUpKey);
+            }
             GUILayout.EndHorizontal();
 
             GUILayout.Space(3);
@@ -136,7 +142,13 @@ namespace yut23.ButtonMapper
             GUILayout.BeginHorizontal(new GUILayoutOption[0]);
             GUILayout.Label("Decrease speed key:", new GUILayoutOption[0]);
             GUILayout.FlexibleSpace();
-            speedDownKey = GUILayout.TextField(speedDownKey, GUILayout.MinWidth(90));
+            GUI.SetNextControlName("SpeedDownTextField");
+            tempSpeedDownKey = GUILayout.TextField(tempSpeedDownKey, GUILayout.MinWidth(90));
+            if (GUI.GetNameOfFocusedControl() != "SpeedDownTextField" && tempSpeedDownKey != "")
+            {
+                speedDownKey = tempSpeedDownKey;
+                Configuration.SetString("key:speeddown", speedDownKey);
+            }
             GUILayout.EndHorizontal();
         }
 

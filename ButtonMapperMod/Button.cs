@@ -20,6 +20,7 @@ namespace yut23.ButtonMapper
                 Configuration.SetString("key:" + name.ToLower(), value);
             }
         }
+        public string tempKey;
         public new string name { get; private set; }
         public bool isMousedOver { get; private set; }
         private bool isFirstMouseOver;
@@ -33,7 +34,7 @@ namespace yut23.ButtonMapper
             this.name = name;
             this.tooltipStr = tooltip;
             this.tooltip = GameObject.Find(tooltipStr + "/Tooltip").GetComponentInChildren<MeshRenderer>();
-            this.key = Configuration.GetString("key:" + name.ToLower(), "");
+            this.key = this.tempKey = Configuration.GetString("key:" + name.ToLower(), "");
             return this;
         }
 

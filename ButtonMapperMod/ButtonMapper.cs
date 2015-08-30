@@ -58,7 +58,10 @@ namespace yut23.ButtonMapper
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
                 GUILayout.Label(b.name + " key:", new GUILayoutOption[0]);
                 GUILayout.FlexibleSpace();
-                b.key = GUILayout.TextField(b.key, GUILayout.MinWidth(90));
+                GUI.SetNextControlName(b.name + "TextField");
+                b.tempKey = GUILayout.TextField(b.tempKey, GUILayout.MinWidth(90));
+                if (GUI.GetNameOfFocusedControl() != b.name + "TextField" && b.tempKey != "")
+                    b.key = b.tempKey;
                 GUILayout.EndHorizontal();
                 GUILayout.Space(3);
             }
