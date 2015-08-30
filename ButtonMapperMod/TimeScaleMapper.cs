@@ -40,7 +40,6 @@ namespace yut23.ButtonMapper
                 StringSplitOptions.RemoveEmptyEntries); // this shouldn't really be needed, but computers are weird sometimes
             foreach (var hotkey in hotkeys)
             {
-                Debug.Log(hotkey);
                 percentHotkeys[hotkey] = Configuration.GetFloat("boundKey:" + hotkey, -1);
             }
 
