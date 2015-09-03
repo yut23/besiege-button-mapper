@@ -9,11 +9,9 @@ namespace yut23.ButtonMapper
         public override string Name { get { return "button-mapper-mod"; } }
         public override string DisplayName { get { return "Button Mapper Mod"; } }
         public override string Author { get { return "Yut23"; } }
-        public override Version Version { get { return new Version(2, 1); } }
+        public override Version Version { get { return new Version(2, 2); } }
         public override string BesiegeVersion { get { return "v0.11"; } }
         public override bool CanBeUnloaded { get { return true; } }
-
-        private string hotkeyList;
 
         public override void OnLoad()
         {
@@ -27,15 +25,12 @@ namespace yut23.ButtonMapper
             AddConfigIfNotExist("key:speeddown", "-");
 
             // custom time hotkey configs
-            AddConfigIfNotExist("boundKeys", "[ ] \\");
-            hotkeyList = Configuration.GetString("boundKeys", "");
             if (!Configuration.DoesKeyExist("boundKey:["))
                 Configuration.SetFloat("boundKey:[", 0);
             if (!Configuration.DoesKeyExist("boundKey:]"))
                 Configuration.SetFloat("boundKey:]", 1);
             if (!Configuration.DoesKeyExist("boundKey:\\"))
                 Configuration.SetFloat("boundKey:\\", 100);
-            Configuration.SetString("boundKeys", hotkeyList);
 
             GameObject.DontDestroyOnLoad(SingleInstance<ButtonMapper>.Instance);
         }

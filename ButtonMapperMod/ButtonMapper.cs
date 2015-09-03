@@ -19,15 +19,23 @@ namespace yut23.ButtonMapper
         public void Start()
         {
             SettingsMenu.RegisterSettingsButton("Button\nMapper", new SettingsToggle(SetGuiVisible), false, 13);
-
-            timeScaleMapper = gameObject.AddComponent<TimeScaleMapper>();
         }
 
         private void OnLevelWasLoaded(int level)
         {
-            buttons.Add(gameObject.AddComponent<Button>().Init(new TranslateButtonAdapter(), "Translate", "Translate Tool"));
-            buttons.Add(gameObject.AddComponent<Button>().Init(new EraseButtonAdapter(), "Erase", "EraseTool"));
-            buttons.Add(gameObject.AddComponent<Button>().Init(new KeyMapModeButtonAdapter(), "KM+PT", "KeyMapInfoTool"));
+            if (Game.AddPiece == null)
+            {
+                isLoaded = false;
+                GameObject.Destroy(timeScaleMapper);
+                buttons.Clear();
+                return;
+            }
+
+            timeScaleMapper = gameObject.AddComponent<TimeScaleMapper>();
+
+            buttons.Add(new Button(new TranslateButtonAdapter(), "Translate", "Translate Tool"));
+            buttons.Add(new Button(new EraseButtonAdapter(), "Erase", "EraseTool"));
+            buttons.Add(new Button(new KeyMapModeButtonAdapter(), "KM+PT", "KeyMapInfoTool"));
 
             // load configuration
             foreach (var b in buttons)
@@ -72,10 +80,10 @@ namespace yut23.ButtonMapper
 
         public void Update()
         {
-            if (isLoaded && !AddPiece.isSimulating && !LevelEditController.levelEditActive)
-            {
+            if (!isLoaded || AddPiece.isSimulating || LevelEditController.levelEditActive) return;
                 foreach (var b in buttons)
                 {
+                    b.Update();
                     // handle assigning keybinds on mouseOver
                     if (b.isMousedOver && Input.anyKeyDown)
                     {
@@ -87,7 +95,6 @@ namespace yut23.ButtonMapper
                     // handle button keybinds
                     if (Input.GetKeyDown(b.key)) b.Trigger();
                 }
-            }
         }
     }
 }

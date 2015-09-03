@@ -6,7 +6,7 @@ namespace yut23.ButtonMapper
 {
     public delegate void OnMouseOver();
     public delegate void OnMouseOut();
-    public class Button : MonoBehaviour
+    public class Button
     {
         public event OnMouseOver OnMouseOver;
         public event OnMouseOut OnMouseOut;
@@ -21,21 +21,20 @@ namespace yut23.ButtonMapper
             }
         }
         public string tempKey;
-        public new string name { get; private set; }
+        public string name { get; private set; }
         public bool isMousedOver { get; private set; }
         private bool isFirstMouseOver;
         private MeshRenderer tooltip;
         private string tooltipStr;
         private IButtonAdapter button;
 
-        public Button Init(IButtonAdapter button, string name, string tooltip)
+        public Button(IButtonAdapter button, string name, string tooltip)
         {
             this.button = button;
             this.name = name;
             this.tooltipStr = tooltip;
             this.tooltip = GameObject.Find(tooltipStr + "/Tooltip").GetComponentInChildren<MeshRenderer>();
             this.key = this.tempKey = Configuration.GetString("key:" + name.ToLower(), "");
-            return this;
         }
 
         public void Trigger()
